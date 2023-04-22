@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Sinara.Core.Types\Sinara.Core.csproj" />
+    <ProjectReference Include="..\SinaraService.TransortTypes\Sinara.UserService.TransortTypes.csproj" />
+  </ItemGroup>
+
+</Project>
