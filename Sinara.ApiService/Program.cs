@@ -1,25 +1,13 @@
-using Sinara.UserService.TransortTypes.Api;
-using Sinara.UserService.TransortTypes.Api.Contracts;
+using Microsoft.AspNetCore.Hosting;
+using Sinara.Core.Initializing;
 
-var builder = WebApplication.CreateBuilder(args);
-
-// Add services to the container.
-builder.Services.AddRazorPages();
-builder.Services.AddTransient<IUsersHttpApi, UsersHttpApi>();
-
-var app = builder.Build();
-
-// Configure the HTTP request pipeline.
-if (!app.Environment.IsDevelopment())
+namespace Sinara.ApiService
 {
-    app.UseExceptionHandler("/Error");
+    public class Program
+    {
+        public static void Main(string[] args)
+        {
+            InitApp.Main<Program, Startup>(args);
+        }
+    }
 }
-app.UseStaticFiles();
-
-app.UseRouting();
-
-app.UseAuthorization();
-
-app.MapRazorPages();
-
-app.Run();

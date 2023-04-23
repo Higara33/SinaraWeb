@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
 
-namespace Sinara.Core.Managers
+namespace Sinara.Core.Providers
 {
     public abstract class OptionsProviderBase
     {
