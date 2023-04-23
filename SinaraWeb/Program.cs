@@ -1,3 +1,4 @@
+using Sinara.UserService.Api;
 using Sinara.UserService.TransortTypes.Api.Contracts;
 using SinaraService.DBConnect;
 using SinaraWeb.DBConnect.Interfaces;
@@ -7,7 +8,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddRazorPages();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
-builder.Services.AddTransient<IUsersHttpApi, IUsersHttpApi>();
+builder.Services.AddTransient<IUsersHttpApi, UsersHttpApi>();
 
 
 var app = builder.Build();

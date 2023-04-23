@@ -1,22 +1,41 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Sinara.Core;
+using Sinara.Core.Types.Api.ViewModels;
+using Sinara.UserService.TransortTypes.Api.Contracts;
 using SinaraWeb.DBConnect.Interfaces;
 using SinaraWeb.DBConnect.Models;
 
 namespace Sinara.UserService.Areas.Api.Controllers
 {
-    [Route("api/[controller]")]
     [ApiController]
-    public class UsersController : ControllerBase
+    [Area(Constants.AreaMvc.Api)]
+    [Route("/[area]/[controller]")]
+    public class UsersController : Controller, IUsersHttpApi
     {
-        readonly IUserRepository _userRepository;
-        public UsersController(IUserRepository userRepository)
+        private readonly IUsersHttpApi _usersHttpApi;
+
+        [HttpPost("AddUser")]
+        public async Task<ApiResult> AddUser()
         {
-            _userRepository = userRepository;
+            return await _usersHttpApi.AddUser();
         }
-        [HttpGet]
-        public ActionResult<List<User>> Get()
+
+        [HttpDelete("DeleteUser")]
+        public async Task<ApiResult> DeleteUser()
         {
-            return Ok(_userRepository.GetUsers());
+            return await _usersHttpApi.DeleteUser();
+        }
+
+        [HttpPost("EditUser")]
+        public async Task<ApiResult> EditUser()
+        {
+            return await _usersHttpApi.EditUser();
+        }
+
+        [HttpGet("GetAllUsers")]
+        public async Task<ApiResult> GetAllUsers()
+        {
+            return await _usersHttpApi.GetAllUsers();
         }
     }
 }

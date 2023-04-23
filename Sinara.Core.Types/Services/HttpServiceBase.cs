@@ -1,5 +1,8 @@
-﻿using Newtonsoft.Json;
+﻿using Microsoft.AspNetCore.WebUtilities;
+using Microsoft.Extensions.Configuration;
+using Newtonsoft.Json;
 using Sinara.Core.Attributes;
+using Sinara.Core.Managers.Contracts;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -13,6 +16,23 @@ namespace Sinara.Core.Services
 {
     public abstract class HttpServiceBase
     {
+        protected readonly IConfigurationManager _cfg;
+        private IConfigurationSection ServiceUrl { get; }
+        private Dictionary<string, string> ParamsDict { get; set; }
+        private string Index { get; set; }
+        private string ControllerName { get; }
+        private string AreaName { get; }
+
+        protected HttpServiceBase(IConfigurationManager cfg)
+        {
+            _cfg = cfg;
+            var attr = GetAttribute();
+            ServiceUrl = _cfg.Services[attr.ServiceName];
+            ControllerName = attr.ControllerName;
+            AreaName = attr.AreaName;
+            ParamsDict = new Dictionary<string, string>();
+        }
+
         protected async Task<T> GetAsync<T>(params object[] args)
         {
             try
@@ -98,6 +118,83 @@ namespace Sinara.Core.Services
         }
 
         #region Private
+
+        private static StringContent GetJsonBodyContent(object arg)
+        {
+            var json = JsonConvert.SerializeObject(arg);
+            return new StringContent(json, Encoding.UTF8, "application/json");
+        }
+
+        private static HttpContent GetBody(MethodBase method, IReadOnlyList<object> args)
+        {
+            var methodParams = method.GetParameters();
+
+            for (var i = 0; i < args.Count; i++)
+            {
+                if (methodParams[i].CustomAttributes.Any(x => x.AttributeType == typeof(ToBodyAttribute)))
+                    return GetJsonBodyContent(args[i]);
+            }   
+
+            return new StringContent(string.Empty, Encoding.UTF8, "application/json");
+        }
+
+        private HttpServiceAttribute GetAttribute()
+        {
+            var attrs = GetType().GetCustomAttributes(typeof(HttpServiceAttribute), true);
+            if (!attrs.Any())
+                throw new ArgumentException("The attribute HttpServiceAttribute was not found.");
+            if (attrs[0] is HttpServiceAttribute attr)
+                return attr;
+            throw new ArgumentException("The attribute HttpServiceAttribute was not found.");
+        }
+
+        private void GetUrlParams(MethodBase method, IReadOnlyList<object> args)
+        {
+            var methodParams = method.GetParameters();
+
+            ParamsDict = new Dictionary<string, string>();
+
+            for (var i = 0; i < args.Count; i++)
+            {
+                if (methodParams[i].CustomAttributes.Any(x => x.AttributeType == typeof(ToBodyAttribute)))
+                    continue;
+
+                if (methodParams[i].CustomAttributes.Any(x => x.AttributeType == typeof(ToIndexAttribute)))
+                {
+                    Index = args[i].ToString();
+                    continue;
+                }
+
+                if (args[i] != null)
+                {
+                    ParamsDict.Add(methodParams[i].Name, JsonConvert.SerializeObject(args[i]));
+                }
+            }
+        }
+
+        private string GetUrl(MethodBase method, IReadOnlyList<object> args)
+        {
+            GetUrlParams(method, args);
+            return UriCombine(method.Name);
+        }
+
+        private string UriCombine(string methodName)
+        {
+            var urls = string.IsNullOrEmpty(Index)
+                ? new[]
+                {
+                    ServiceUrl.Value, AreaName, ControllerName, methodName
+                }
+                : new[]
+                {
+                    ServiceUrl.Value, AreaName, ControllerName, methodName, Index
+                };
+
+            var url = string.Join("/", urls);
+            var uri = new Uri(QueryHelpers.AddQueryString(url, ParamsDict));
+
+            return uri.ToString().Replace("\"", "");
+        }
 
         private static MethodBase GetMethod()
         {

@@ -8,22 +8,22 @@ namespace Sinara.UserService.Api
     {
         public async Task<ApiResult> GetAllUsers()
         {
-
+            throw new NotImplementedException();
         }
 
         public async Task<ApiResult> EditUser()
         {
-
+            throw new NotImplementedException();
         }
 
         public async Task<ApiResult> AddUser()
         {
-
+            throw new NotImplementedException();
         }
 
         public  async Task<ApiResult> DeleteUser()
         {
-
+            throw new NotImplementedException();
         }
     }
 }

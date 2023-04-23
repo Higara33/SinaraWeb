@@ -14,19 +14,19 @@ namespace Sinara.ApiService.Controllers
             return await DoRequest(async () => await _usersHttpApi.GetAllUsers());
         }
 
-        [HttpGet("EditUser")]
+        [HttpPost("EditUser")]
         public async Task<IActionResult> EditUser()
         {
             return await DoRequest(async () => await _usersHttpApi.EditUser());
         }
 
-        [HttpGet("DeleteUser")]
+        [HttpDelete("DeleteUser")]
         public async Task<IActionResult> DeleteUser()
         {
             return await DoRequest(async () => await _usersHttpApi.DeleteUser());
         }
 
-        [HttpGet("AddUser")]
+        [HttpPost("AddUser")]
         public async Task<IActionResult> AddUser()
         {
             return await DoRequest(async () => await _usersHttpApi.AddUser());
