@@ -11,6 +11,8 @@ namespace Sinara.Core.Managers
 {
     public class ConfigurationManager : OptionsProviderBase, IConfigurationManager
     {
+        public ConfigurationManager(IConfiguration configuration) : base(configuration) { }
+
         public static IConfigurationManager Instance;
         public Dictionary<string, IConfigurationSection> Services => GetServices();
     }

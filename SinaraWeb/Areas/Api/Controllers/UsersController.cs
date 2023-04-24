@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http.Extensions;
+using Microsoft.AspNetCore.Mvc;
 using Sinara.Core;
 using Sinara.Core.Types.Api.ViewModels;
 using Sinara.UserService.TransortTypes.Api.Contracts;
@@ -13,6 +14,11 @@ namespace Sinara.UserService.Areas.Api.Controllers
     public class UsersController : Controller, IUsersHttpApi
     {
         private readonly IUsersHttpApi _usersHttpApi;
+
+        public UsersController(IUsersHttpApi usersHttpApi) 
+        {
+            _usersHttpApi = usersHttpApi;
+        }
 
         [HttpPost("AddUser")]
         public async Task<ApiResult> AddUser()

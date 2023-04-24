@@ -1,5 +1,7 @@
 ﻿using System.Configuration;
 using Sinara.Core.Initializing;
+using Sinara.UserService.Api;
+using Sinara.UserService.TransortTypes.Api.Contracts;
 
 namespace Sinara.UserService
 {
@@ -15,6 +17,8 @@ namespace Sinara.UserService
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddSinaraCore(Configuration);
+
+            services.AddTransient<IUsersHttpApi, UsersHttpApi>();
         }
 
         public void Configure(IApplicationBuilder app)

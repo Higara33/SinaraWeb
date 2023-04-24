@@ -11,6 +11,11 @@ namespace Sinara.Core.Providers
     {
         private readonly IConfiguration _configuration;
 
+        public OptionsProviderBase(IConfiguration configuration)
+        {
+            _configuration = configuration;
+        }
+
         protected Dictionary<string, IConfigurationSection> GetServices()
         {
             var result = new Dictionary<string, IConfigurationSection>();

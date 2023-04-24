@@ -4,9 +4,16 @@ using Sinara.UserService.TransortTypes.Api.Contracts;
 
 namespace Sinara.ApiService.Controllers
 {
+    [ApiController]
+    [Route("/api/[controller]")]
     public class UsersController : ApiControllerBase
     {
         private readonly IUsersHttpApi _usersHttpApi;
+
+        public UsersController(IUsersHttpApi usersHttpApi) 
+        {
+            _usersHttpApi = usersHttpApi;
+        }
 
         [HttpGet("GetAllUsers")]
         public async Task<IActionResult> GetAllUsers()
