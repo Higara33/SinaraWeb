@@ -16,5 +16,12 @@ namespace Sinara.UserService
         {
             services.AddSinaraCore(Configuration);
         }
+
+        public void Configure(IApplicationBuilder app)
+        {
+            app.UseRouting();
+
+            app.ConfigureSinara();
+        }
     }
 }

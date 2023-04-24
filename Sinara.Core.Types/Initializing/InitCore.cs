@@ -1,4 +1,6 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Sinara.Core.Helpers;
 using Sinara.Core.Managers.Contracts;
@@ -18,7 +20,8 @@ namespace Sinara.Core.Initializing
         public static IConfiguration LoadConfiguration()
         {
             return new ConfigurationBuilder()
-                .AddJsonFile(Path.Combine(EnvironmentHelper.PathToConfigs, "sinaraconfig.json"))
+                //.AddJsonFile(Path.Combine(EnvironmentHelper.PathToConfigs, "sinaraconfig.json"))
+                .AddJsonFile("D:\\sinaraconfig.json")
                 .AddEnvironmentVariables()
                 .Build();
         }
@@ -35,14 +38,25 @@ namespace Sinara.Core.Initializing
             services
                .AddControllers()
                .AddControllersAsServices()
-               .AddJsonOptions(options =>
-               {
-                   options.JsonSerializerOptions.Converters.Add(new DateTimeConverter());
-                   options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
-               })
+               //.AddJsonOptions(options =>
+               //{
+               //    options.JsonSerializerOptions.Converters.Add(new DateTimeConverter());
+               //    options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+               //})
                .AddNewtonsoftJson();
 
             return services;
+        }
+
+        public static IApplicationBuilder ConfigureSinara(this IApplicationBuilder app)
+        {
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllers();
+                //endpoints.MapHealthChecks("/health");
+            });
+
+            return app;
         }
     }
 }
