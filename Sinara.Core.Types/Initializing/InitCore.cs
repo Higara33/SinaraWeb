@@ -49,8 +49,8 @@ namespace Sinara.Core.Initializing
             {
                 endpoints.MapControllers();
                 //endpoints.MapHealthChecks("/health");
-                endpoints.MapBlazorHub();
-                endpoints.MapRazorPages();
+                //endpoints.MapBlazorHub();
+                //endpoints.MapRazorPages();
             });
 
             return app;

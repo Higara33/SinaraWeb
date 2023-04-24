@@ -11,6 +11,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sinara.Core", "Sinara.Core.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sinara.ApiService", "Sinara.ApiService\Sinara.ApiService.csproj", "{258158D2-C1E7-46C3-925C-2249F6D77AC2}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazorApp1", "BlazorApp1\BlazorApp1.csproj", "{012341B1-EEA1-41FD-926B-2621543DC36C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{258158D2-C1E7-46C3-925C-2249F6D77AC2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{258158D2-C1E7-46C3-925C-2249F6D77AC2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{258158D2-C1E7-46C3-925C-2249F6D77AC2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{012341B1-EEA1-41FD-926B-2621543DC36C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{012341B1-EEA1-41FD-926B-2621543DC36C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{012341B1-EEA1-41FD-926B-2621543DC36C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{012341B1-EEA1-41FD-926B-2621543DC36C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
