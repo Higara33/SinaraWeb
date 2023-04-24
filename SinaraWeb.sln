@@ -9,7 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sinara.UserService.Transort
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sinara.Core", "Sinara.Core.Types\Sinara.Core.csproj", "{A8EB48E7-CB35-447B-B2A0-81F9829C3176}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sinara.ApiService", "Sinara.ApiService\Sinara.ApiService.csproj", "{258158D2-C1E7-46C3-925C-2249F6D77AC2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sinara.ApiService", "Sinara.ApiService\Sinara.ApiService.csproj", "{258158D2-C1E7-46C3-925C-2249F6D77AC2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

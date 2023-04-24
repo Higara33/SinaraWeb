@@ -23,6 +23,9 @@ namespace Sinara.ApiService
             services.AddSinaraCore(Configuration);
 
             services.AddTransient<IUsersHttpApi, UsersHttpApi>();
+
+            services.AddRazorPages();
+            services.AddServerSideBlazor(o => o.DetailedErrors = true);
         }
 
         public void Configure(IApplicationBuilder app)
