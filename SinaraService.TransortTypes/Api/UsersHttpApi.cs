@@ -14,19 +14,19 @@ namespace Sinara.UserService.TransortTypes.Api
         {
         }
 
-        public async Task<ApiResult> AddUser()
+        public async Task<ApiResult> AddUser(string firstName, string lastName, string fatherName, string login)
         {
-            return await PostAsync<ApiResult>();
+            return await PostAsync<ApiResult>(firstName, lastName, fatherName, login);
         }
 
-        public async Task<ApiResult> DeleteUser()
+        public async Task<ApiResult> DeleteUser(string login)
         {
-            return await DeleteAsync<ApiResult>();
+            return await DeleteAsync<ApiResult>(login);
         }
 
-        public async Task<ApiResult> EditUser()
+        public async Task<ApiResult> EditUser(string login)
         {
-            return await PostAsync<ApiResult>();
+            return await PostAsync<ApiResult>(login);
         }
 
         public async Task<ApiResult> GetAllUsers()

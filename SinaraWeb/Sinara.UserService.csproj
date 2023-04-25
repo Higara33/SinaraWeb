@@ -15,4 +15,9 @@
     <ProjectReference Include="..\SinaraService.TransortTypes\Sinara.UserService.TransortTypes.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Models\FormModels\" />
+    <Folder Include="Models\ViewModels\" />
+  </ItemGroup>
+
 </Project>

@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using SinaraWeb.DBConnect.Models;
+using Sinara.UserService.Models;
 
 namespace SinaraWeb.DBConnect
 {
@@ -8,7 +8,7 @@ namespace SinaraWeb.DBConnect
         protected override void OnConfiguring
        (DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseInMemoryDatabase(databaseName: "AuthorDb");
+            optionsBuilder.UseInMemoryDatabase(databaseName: "UsersDb");
         }
         public DbSet<User> Users { get; set; }
     }
