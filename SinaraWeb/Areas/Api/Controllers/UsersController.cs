@@ -31,9 +31,9 @@ namespace Sinara.UserService.Areas.Api.Controllers
         }
 
         [HttpPost("EditUser")]
-        public async Task<ApiResult> EditUser(string login)
+        public async Task<ApiResult> EditUser(string firstName, string lastName, string fatherName, string login)
         {
-            return await _usersHttpApi.EditUser(login);
+            return await _usersHttpApi.EditUser(firstName, lastName, fatherName, login);
         }
 
         [HttpGet("GetAllUsers")]

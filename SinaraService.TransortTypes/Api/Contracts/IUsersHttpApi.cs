@@ -10,7 +10,7 @@ namespace Sinara.UserService.TransortTypes.Api.Contracts
     public interface IUsersHttpApi
     {
         Task<ApiResult> GetAllUsers();
-        Task<ApiResult> EditUser(string login);
+        Task<ApiResult> EditUser(string firstName, string lastName, string fatherName, string login);
         Task<ApiResult> DeleteUser(string login);
         Task<ApiResult> AddUser(string firstName, string lastName, string fatherName, string login);
     }

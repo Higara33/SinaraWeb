@@ -18,7 +18,8 @@ namespace Sinara.UserService
         {
             services.AddSinaraCore(Configuration);
 
-            services.AddTransient<IUsersHttpApi, UsersHttpApi>();
+            services.AddSingleton<IUsersHttpApi, UsersHttpApi>();
+            
         }
 
         public void Configure(IApplicationBuilder app)

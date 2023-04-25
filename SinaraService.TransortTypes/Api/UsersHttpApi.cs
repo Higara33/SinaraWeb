@@ -24,9 +24,9 @@ namespace Sinara.UserService.TransortTypes.Api
             return await DeleteAsync<ApiResult>(login);
         }
 
-        public async Task<ApiResult> EditUser(string login)
+        public async Task<ApiResult> EditUser(string firstName, string lastName, string fatherName, string login)
         {
-            return await PostAsync<ApiResult>(login);
+            return await PostAsync<ApiResult>(firstName, lastName, fatherName, login);
         }
 
         public async Task<ApiResult> GetAllUsers()

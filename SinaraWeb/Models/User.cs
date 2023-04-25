@@ -6,6 +6,6 @@
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string FatherName { get; set; }
-        public ActiveDirectory Login { get; set; }
+        public string Login { get; set; }
     }
 }

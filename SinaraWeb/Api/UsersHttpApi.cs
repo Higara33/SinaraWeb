@@ -32,7 +32,7 @@ namespace Sinara.UserService.Api
                     FirstName = firstName,
                     LastName = lastName,
                     FatherName = fatherName,
-                    Login = new ActiveDirectory { Login = login }
+                    Login =  login 
                 };
 
                 context.Users.Add(user);
@@ -44,14 +44,14 @@ namespace Sinara.UserService.Api
 
         public  async Task<ApiResult> DeleteUser(string login)
         {
-            //using (var context = new ApiContext())
-            //{
-            //    var list = context.Users.ToList();
-                
-            //    context.Users.Remove(context.Users.Find(login);
+            using (var context = new ApiContext())
+            {
+                var list = context.Users.ToList();
 
-            //    context.SaveChanges();
-            //}
+                context.Users.Remove(context.Users.Find(login));
+
+                context.SaveChanges();
+            }
 
             return new ApiResult().Ok();
         }
