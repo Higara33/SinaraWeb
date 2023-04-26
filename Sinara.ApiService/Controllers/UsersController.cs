@@ -22,9 +22,9 @@ namespace Sinara.ApiService.Controllers
         }
 
         [HttpPost("EditUser")]
-        public async Task<IActionResult> EditUser(string firstName, string lastName, string fatherName, string login)
+        public async Task<IActionResult> EditUser(string login, string firstName = null, string lastName = null, string fatherName = null, string newLogin = null)
         {
-            return await DoRequest(async () => await _usersHttpApi.EditUser(firstName, lastName, fatherName, login));
+            return await DoRequest(async () => await _usersHttpApi.EditUser(login, firstName, lastName, fatherName, newLogin));
         }
 
         [HttpDelete("DeleteUser")]
