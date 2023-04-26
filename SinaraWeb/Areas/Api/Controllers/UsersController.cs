@@ -36,10 +36,10 @@ namespace Sinara.UserService.Areas.Api.Controllers
             return await _usersHttpApi.EditUser(login, firstName, lastName, fatherName, newLogin);
         }
 
-        [HttpGet("GetAllUsers")]
-        public async Task<ApiResult> GetAllUsers()
+        [HttpGet("GetUsers")]
+        public async Task<ApiResult> GetUsers()
         {
-            return await _usersHttpApi.GetAllUsers();
+            return await _usersHttpApi.GetUsers();
         }
     }
 }

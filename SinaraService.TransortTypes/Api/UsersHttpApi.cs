@@ -29,7 +29,7 @@ namespace Sinara.UserService.TransortTypes.Api
             return await PostAsync<ApiResult>(login, firstName, lastName, fatherName, newLogin);
         }
 
-        public async Task<ApiResult> GetAllUsers()
+        public async Task<ApiResult> GetUsers()
         {
             return await GetAsync<ApiResult>();
         }

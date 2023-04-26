@@ -15,10 +15,10 @@ namespace Sinara.ApiService.Controllers
             _usersHttpApi = usersHttpApi;
         }
 
-        [HttpGet("GetAllUsers")]
-        public async Task<IActionResult> GetAllUsers()
+        [HttpGet("GetUsers")]
+        public async Task<IActionResult> GetUsers()
         {
-            return await DoRequest(async () => await _usersHttpApi.GetAllUsers());
+            return await DoRequest(async () => await _usersHttpApi.GetUsers());
         }
 
         [HttpPost("EditUser")]
