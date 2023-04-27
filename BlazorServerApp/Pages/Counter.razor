@@ -1,4 +1,5 @@
 ﻿@page "/counter"
+@using Sinara.UserService.TransortTypes.Api.Contracts;
 
 <PageTitle>Counter</PageTitle>
 
@@ -9,13 +10,14 @@
 <button class="btn btn-primary" @onclick="IncrementCount">Click me</button>
 
 @code {
-    protected override void OnInitialized()
-    {
-        var test = httpClient.GetAsync(@"http://localhost:5181/Api/Users/GetUsers");
-        httpClient.
-    }
+    [Inject]
+    public IUsersHttpApi _usersHttpApi { get; set; }
 
-    httpClient.
+
+    protected async override Task OnInitializedAsync()
+    {
+        var test = await _usersHttpApi.GetUsers();
+    }
 
     private int currentCount = 0;
 
