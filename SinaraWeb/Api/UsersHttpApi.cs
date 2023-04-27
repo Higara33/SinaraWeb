@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Sinara.Core.Types.Api.Extensions;
 using Sinara.Core.Types.Api.ViewModels;
-using Sinara.UserService.Models;
+using Sinara.UserService.TransortTypes.Models;
 using Sinara.UserService.TransortTypes.Api.Contracts;
 using SinaraWeb.DBConnect;
 using System.Collections.Generic;

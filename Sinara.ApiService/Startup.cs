@@ -62,6 +62,7 @@ namespace Sinara.ApiService
             });
 
             app.ConfigureSinara();
+
         }
     }
 }

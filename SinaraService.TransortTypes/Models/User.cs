@@ -1,4 +1,4 @@
-﻿namespace Sinara.UserService.Models
+﻿namespace Sinara.UserService.TransortTypes.Models
 {
     public class User
     {

@@ -13,7 +13,7 @@
 }
 else
 {
-    <table class="table">
+    @*<table class="table">
         <thead>
             <tr>
                 <th>Date</th>
@@ -33,15 +33,16 @@ else
                 </tr>
             }
         </tbody>
-    </table>
+    </table>*@
 }
 
 @code {
     private WeatherForecast[]? forecasts;
+    private DataTest[] dataTest;
 
     protected override async Task OnInitializedAsync()
     {
-        forecasts = await Http.GetFromJsonAsync<WeatherForecast[]>("sample-data/weather.json");
+        var test = await Http.GetFromJsonAsync<DataTest[]>("Api/Users/GetUsers");
     }
 
     public class WeatherForecast
@@ -53,5 +54,12 @@ else
         public string? Summary { get; set; }
 
         public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
+    }
+
+    public class DataTest
+    {
+        public object Errors { get; set; }
+
+        public object[] Data { get; set; }
     }
 }

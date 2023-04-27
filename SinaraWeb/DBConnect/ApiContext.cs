@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Sinara.UserService.Models;
+using Sinara.UserService.TransortTypes.Models;
 
 namespace SinaraWeb.DBConnect
 {

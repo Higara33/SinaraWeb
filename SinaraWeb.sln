@@ -11,9 +11,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sinara.Core", "Sinara.Core.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sinara.ApiService", "Sinara.ApiService\Sinara.ApiService.csproj", "{258158D2-C1E7-46C3-925C-2249F6D77AC2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazorWebAss", "BlazorWebAss\BlazorWebAss.csproj", "{C2BBFAC8-3240-43AA-A530-99866ACA567A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorWebAss", "BlazorWebAss\BlazorWebAss.csproj", "{C2BBFAC8-3240-43AA-A530-99866ACA567A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazorServerApp", "BlazorServerApp\BlazorServerApp.csproj", "{22002F37-3D41-4991-87EA-397E70A5F8F2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorServerApp", "BlazorServerApp\BlazorServerApp.csproj", "{22002F37-3D41-4991-87EA-397E70A5F8F2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
