@@ -10,19 +10,24 @@ namespace Sinara.UserService.Api
 {
     public class UsersHttpApi : IUsersHttpApi
     {
-        public async Task<ApiResult> GetUsers()
+        public async Task<ApiResult> GetUsers(bool deleted = false)
         {
             using (var context = new ApiContext())
             {
-                if (context.Users.ToList().Count == 0)
-                    return new ApiResult().Error("no_users_in_note", $"There are no users in note");
+                if (!deleted)
+                {
+                    if (context.Users.ToList().Count == 0)
+                        return new ApiResult().Error("no_users_in_note", $"There are no users in note");
 
-                var notDeletedUsers = GetNotDeletedUsers();
+                    var notDeletedUsers = GetNotDeletedUsers();
 
-                if (notDeletedUsers.Count == 0)
-                    return new ApiResult().Error("operetion_with_deleted_users", $"There are no users in note");
+                    if (notDeletedUsers.Count == 0)
+                        return new ApiResult().Error("operetion_with_deleted_users", $"There are no users in note");
 
-                return new ApiResult().Ok(notDeletedUsers);
+                    return new ApiResult().Ok(notDeletedUsers);
+                }
+                else
+                    return new ApiResult().Error("operetion_with_deleted_users", $"You do not have permission to view deleted users");
             }
         }
 

@@ -19,7 +19,7 @@ namespace Sinara.UserService.TransortTypes.Api
             return await PostAsync<ApiResult>(firstName, lastName, fatherName, login);
         }
 
-        public async Task<ApiResult> DeleteUser(string login)
+        public async Task<ApiResult> DeleteUser([ToIndex]string login)
         {
             return await DeleteAsync<ApiResult>(login);
         }
@@ -29,9 +29,9 @@ namespace Sinara.UserService.TransortTypes.Api
             return await PostAsync<ApiResult>(login, firstName, lastName, fatherName, newLogin);
         }
 
-        public async Task<ApiResult> GetUsers()
+        public async Task<ApiResult> GetUsers(bool deleted = false)
         {
-            return await GetAsync<ApiResult>();
+            return await GetAsync<ApiResult>(deleted);
         }
 
     }

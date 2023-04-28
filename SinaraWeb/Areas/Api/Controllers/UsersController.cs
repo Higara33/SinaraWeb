@@ -24,7 +24,7 @@ namespace Sinara.UserService.Areas.Api.Controllers
             return await _usersHttpApi.AddUser(firstName, lastName, fatherName, login);
         }
 
-        [HttpDelete("DeleteUser")]
+        [HttpDelete("DeleteUser/{login}")]
         public async Task<ApiResult> DeleteUser(string login)
         {
             return await _usersHttpApi.DeleteUser(login);
@@ -37,9 +37,9 @@ namespace Sinara.UserService.Areas.Api.Controllers
         }
 
         [HttpGet("GetUsers")]
-        public async Task<ApiResult> GetUsers()
+        public async Task<ApiResult> GetUsers(bool deleted)
         {
-            return await _usersHttpApi.GetUsers();
+            return await _usersHttpApi.GetUsers(deleted);
         }
     }
 }

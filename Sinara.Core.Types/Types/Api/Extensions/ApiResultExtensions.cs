@@ -28,6 +28,8 @@ namespace Sinara.Core.Types.Api.Extensions
         {
             return new ApiResult
             {
+                Errors = new ErrorResult[] {new ErrorResult(key, errorMessage)},
+
                 Data = new ResponseErrorModel
                 {
                     Status = ResultStatuses.Error,

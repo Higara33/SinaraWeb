@@ -16,9 +16,9 @@ namespace Sinara.ApiService.Controllers
         }
 
         [HttpGet("GetUsers")]
-        public async Task<IActionResult> GetUsers()
+        public async Task<IActionResult> GetUsers(bool deleted = false)
         {
-            return await DoRequest(async () => await _usersHttpApi.GetUsers());
+            return await DoRequest(async () => await _usersHttpApi.GetUsers(deleted));
         }
 
         [HttpPost("EditUser")]
@@ -27,7 +27,7 @@ namespace Sinara.ApiService.Controllers
             return await DoRequest(async () => await _usersHttpApi.EditUser(login, firstName, lastName, fatherName, newLogin));
         }
 
-        [HttpDelete("DeleteUser")]
+        [HttpDelete("DeleteUser/{login}")]
         public async Task<IActionResult> DeleteUser(string login)
         {
             return await DoRequest(async () => await _usersHttpApi.DeleteUser(login));

@@ -7,59 +7,99 @@
 
 <p>This component demonstrates fetching data from the server.</p>
 
-@if (forecasts == null)
+@if (response == null)
 {
-    <p><em>Loading...</em></p>
+    <p><em>Your note is empty((</em></p>
 }
 else
 {
-    @*<table class="table">
-        <thead>
-            <tr>
-                <th>Date</th>
-                <th>Temp. (C)</th>
-                <th>Temp. (F)</th>
-                <th>Summary</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var forecast in forecasts)
-            {
+    if (response.Errors == null)
+    {
+        <table class="table">
+            <thead>
                 <tr>
-                    <td>@forecast.Date.ToShortDateString()</td>
-                    <td>@forecast.TemperatureC</td>
-                    <td>@forecast.TemperatureF</td>
-                    <td>@forecast.Summary</td>
+                    <th>FirstName</th>
+                    <th>LastName</th>
+                    <th>FatherName</th>
+                    <th>Login</th>
                 </tr>
-            }
-        </tbody>
-    </table>*@
+            </thead>
+            <tbody>
+                @foreach (var user in response.Data)
+                {
+                    <tr>
+                        <td>@user.FirstName</td>
+                        <td>@user.LastName</td>
+                        <td>@user.FatherName</td>
+                        <td>@user.Login</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <p><em> @response.Errors.FirstOrDefault().ErrorMessage </em></p>
+    }
+
+    <button class="btn btn-primary" @onclick="UpdateTable">Update Table</button>
 }
 
 @code {
-    private WeatherForecast[]? forecasts;
-    private DataTest[] dataTest;
+    private Response response;
 
     protected override async Task OnInitializedAsync()
     {
-        var test = await Http.GetFromJsonAsync<DataTest[]>("Api/Users/GetUsers");
+        response = await Http.GetFromJsonAsync<Response>("Api/Users/GetUsers");
+        StateHasChanged();
     }
 
-    public class WeatherForecast
+    private async Task UpdateTable()
     {
-        public DateOnly Date { get; set; }
-
-        public int TemperatureC { get; set; }
-
-        public string? Summary { get; set; }
-
-        public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
+        response = await Http.GetFromJsonAsync<Response>("Api/Users/GetUsers");
+        StateHasChanged();
     }
 
-    public class DataTest
-    {
-        public object Errors { get; set; }
+    //private async Task AddUser()
+    //{
+    //    response = await Http.PostAsJsonAsync<Response>("Api/Users/GetUsers");
 
-        public object[] Data { get; set; }
+
+    //    StateHasChanged();
+    //}
+
+
+
+    public class Response
+    {
+        public ErrorResult[] Errors { get; set; }
+        public User[] Data { get; set; }
+    }
+
+    public class User
+    {
+        public int Id { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public string FatherName { get; set; }
+        public string Login { get; set; }
+        public bool Deleted { get; set; }
+    }
+
+    public class ErrorResult
+    {
+        public ErrorResult()
+        {
+
+        }
+
+        public ErrorResult(string key, string msg)
+        {
+            ErrorKey = key;
+            ErrorMessage = msg;
+        }
+
+        public string ErrorKey { get; set; }
+        public string ErrorMessage { get; set; }
     }
 }
