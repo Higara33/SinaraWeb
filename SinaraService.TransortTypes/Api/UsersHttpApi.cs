@@ -4,6 +4,7 @@ using Sinara.Core.Managers.Contracts;
 using Sinara.Core.Services;
 using Sinara.Core.Types.Api.ViewModels;
 using Sinara.UserService.TransortTypes.Api.Contracts;
+using Sinara.UserService.TransortTypes.Models.FormModels;
 
 namespace Sinara.UserService.TransortTypes.Api
 {
@@ -14,19 +15,19 @@ namespace Sinara.UserService.TransortTypes.Api
         {
         }
 
-        public async Task<ApiResult> AddUser(string firstName, string lastName, string fatherName, string login)
+        public async Task<ApiResult> AddUser([ToBody] AddUserFormModel model)
         {
-            return await PostAsync<ApiResult>(firstName, lastName, fatherName, login);
+            return await PostAsync<ApiResult>(model);
         }
 
-        public async Task<ApiResult> DeleteUser([ToIndex]string login)
+        public async Task<ApiResult> DeleteUser([ToIndex] string login)
         {
             return await DeleteAsync<ApiResult>(login);
         }
 
-        public async Task<ApiResult> EditUser(string login, string firstName = null, string lastName = null, string fatherName = null, string newLogin = null)
+        public async Task<ApiResult> EditUser([ToBody] EditUserFormModel model)
         {
-            return await PostAsync<ApiResult>(login, firstName, lastName, fatherName, newLogin);
+            return await PostAsync<ApiResult>(model);
         }
 
         public async Task<ApiResult> GetUsers(bool deleted = false)

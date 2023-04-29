@@ -1,4 +1,5 @@
 ﻿using Sinara.Core.Types.Api.ViewModels;
+using Sinara.UserService.TransortTypes.Models.FormModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,8 +11,8 @@ namespace Sinara.UserService.TransortTypes.Api.Contracts
     public interface IUsersHttpApi
     {
         Task<ApiResult> GetUsers(bool deleted = false);
-        Task<ApiResult> EditUser(string login, string firstName = null, string lastName = null, string fatherName = null, string newLogin = null);
+        Task<ApiResult> EditUser(EditUserFormModel model);
         Task<ApiResult> DeleteUser(string login);
-        Task<ApiResult> AddUser(string firstName, string lastName, string fatherName, string login);
+        Task<ApiResult> AddUser(AddUserFormModel model);
     }
 }

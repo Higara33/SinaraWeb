@@ -5,6 +5,7 @@ using Sinara.UserService.TransortTypes.Models;
 using Sinara.UserService.TransortTypes.Api.Contracts;
 using SinaraWeb.DBConnect;
 using System.Collections.Generic;
+using Sinara.UserService.TransortTypes.Models.FormModels;
 
 namespace Sinara.UserService.Api
 {
@@ -31,12 +32,12 @@ namespace Sinara.UserService.Api
             }
         }
 
-        public async Task<ApiResult> EditUser(string login, string firstName = null, string lastName = null, string fatherName = null, string newLogin = null)
+        public async Task<ApiResult> EditUser(EditUserFormModel model)
         {
-            if (login == null)
-                return new ApiResult().Error("login_is_null", $"Login=Null");
+            if (model.Login == string.Empty)
+                return new ApiResult().Error("login_is_Empty", $"Login is Empty");
 
-            if (firstName == null && lastName == null && fatherName == null && newLogin == null)
+            if (model.FirstName == string.Empty && model.LastName == string.Empty && model.FatherName == string.Empty && model.NewLogin == string.Empty)
                 return new ApiResult().Error("no_data_to_edit", $"No data to edit!");
 
             using (var context = new ApiContext())
@@ -44,27 +45,27 @@ namespace Sinara.UserService.Api
                 var notDeletedUsers = GetNotDeletedUsers();
 
                 if (notDeletedUsers.Count == 0)
-                    return new ApiResult().Error("No_not_deleted_users", $"User with Login={login} is not found");
+                    return new ApiResult().Error("No_not_deleted_users", $"User with Login={model.Login} is not found");
 
-                if (!notDeletedUsers.Any(x => x.Login == login))
-                    return new ApiResult().Error("user_not_found", $"User with Login={login} is not found");
+                if (!notDeletedUsers.Any(x => x.Login == model.Login))
+                    return new ApiResult().Error("user_not_found", $"User with Login={model.Login} is not found");
 
-                if (notDeletedUsers.Any(x => x.Login == newLogin))
-                    return new ApiResult().Error("the_same_login", $"User with Login={newLogin} already exists");
+                if (notDeletedUsers.Any(x => x.Login == model.NewLogin))
+                    return new ApiResult().Error("the_same_login", $"User with Login={model.NewLogin} already exists");
 
-                var id = notDeletedUsers.Where(x => x.Login == login).First().Id;
+                var id = notDeletedUsers.Where(x => x.Login == model.Login).First().Id;
 
-                if (firstName != null)
-                    context.Users.Find(id).FirstName = firstName;
+                if (model.FirstName != string.Empty)
+                    context.Users.Find(id).FirstName = model.FirstName;
 
-                if (lastName != null)
-                    context.Users.Find(id).LastName = lastName;
+                if (model.LastName != string.Empty)
+                    context.Users.Find(id).LastName = model.LastName;
 
-                if (fatherName != null)
-                    context.Users.Find(id).FatherName = fatherName;
+                if (model.FatherName != string.Empty)
+                    context.Users.Find(id).FatherName = model.FatherName;
 
-                if (newLogin != null)
-                    context.Users.Find(id).Login = newLogin;
+                if (model.NewLogin != string.Empty)
+                    context.Users.Find(id).Login = model.NewLogin;
 
                 context.SaveChanges();
             }
@@ -72,38 +73,38 @@ namespace Sinara.UserService.Api
             return new ApiResult().Ok();
         }
 
-        public async Task<ApiResult> AddUser(string firstName, string lastName, string fatherName, string login)
+        public async Task<ApiResult> AddUser(AddUserFormModel model)
         {
-            if (login == null)
-                return new ApiResult().Error("login_is_null", $"Login=Null");
+            if (model.Login == string.Empty)
+                return new ApiResult().Error("login_is_Empty", $"Login is Empty");
 
-            if (lastName == null)
-                return new ApiResult().Error("lastName_is_null", $"LastName=Null");
+            if (model.LastName == string.Empty)
+                return new ApiResult().Error("lastName_is_Empty", $"LastName is Empty");
 
-            if (fatherName == null)
-                return new ApiResult().Error("fatherName_is_null", $"FatherName=Null");
+            if (model.FatherName == string.Empty)
+                return new ApiResult().Error("fatherName_is_Empty", $"FatherName is Empty");
 
-            if (firstName == null)
-                return new ApiResult().Error("firstName_is_null", $"FirstName=Null");
+            if (model.FirstName == string.Empty)
+                return new ApiResult().Error("firstName_is_Empty", $"FirstName is Empty");
 
             using (var context = new ApiContext())
             {
                 var userList = context.Users.ToList();
                 foreach(var item in userList) 
                 {
-                    if(item.Login == login && !item.Deleted)
-                        return new ApiResult().Error("the_same_login_with_user", $"User with Login={login} already exists");
+                    if(item.Login == model.Login && !item.Deleted)
+                        return new ApiResult().Error("the_same_login_with_user", $"User with Login={model.Login} already exists");
 
-                    if (item.Login == login && item.Deleted)
-                        return new ApiResult().Error("operetion_with_deleted_users", $"User with Login={login} once existed");
+                    if (item.Login == model.Login && item.Deleted)
+                        return new ApiResult().Error("operetion_with_deleted_users", $"User with Login={model.Login} once existed");
                 }
 
                 var user = new User
                 {
-                    FirstName = firstName,
-                    LastName = lastName,
-                    FatherName = fatherName,
-                    Login =  login 
+                    FirstName = model.FirstName,
+                    LastName = model.LastName,
+                    FatherName = model.FatherName,
+                    Login = model.Login
                 };
 
                 context.Users.Add(user);

@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Sinara.ApiService.Code;
 using Sinara.UserService.TransortTypes.Api.Contracts;
+using Sinara.UserService.TransortTypes.Models.FormModels;
 
 namespace Sinara.ApiService.Controllers
 {
@@ -22,9 +23,9 @@ namespace Sinara.ApiService.Controllers
         }
 
         [HttpPost("EditUser")]
-        public async Task<IActionResult> EditUser(string login, string firstName = null, string lastName = null, string fatherName = null, string newLogin = null)
+        public async Task<IActionResult> EditUser([FromBody] EditUserFormModel model)
         {
-            return await DoRequest(async () => await _usersHttpApi.EditUser(login, firstName, lastName, fatherName, newLogin));
+            return await DoRequest(async () => await _usersHttpApi.EditUser(model));
         }
 
         [HttpDelete("DeleteUser/{login}")]
@@ -34,9 +35,9 @@ namespace Sinara.ApiService.Controllers
         }
 
         [HttpPost("AddUser")]
-        public async Task<IActionResult> AddUser(string firstName, string lastName, string fatherName, string login)
+        public async Task<IActionResult> AddUser([FromBody] AddUserFormModel model)
         {
-            return await DoRequest(async () => await _usersHttpApi.AddUser(firstName, lastName, fatherName, login));
+            return await DoRequest(async () => await _usersHttpApi.AddUser(model));
         }
     }
 }

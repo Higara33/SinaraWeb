@@ -1,5 +1,9 @@
 ﻿@page "/note"
+
+@using BlazorWebAss.Models
+
 @inject HttpClient Http
+@inject NavigationManager NavigationManager
 
 <PageTitle>My note</PageTitle>
 
@@ -9,7 +13,7 @@
 
 @if (response == null)
 {
-    <p><em>Your note is empty((</em></p>
+    <p><em>There are no users in note</em></p>
 }
 else
 {
@@ -43,6 +47,9 @@ else
     }
 
     <button class="btn btn-primary" @onclick="UpdateTable">Update Table</button>
+    <button class="btn btn-primary" @onclick="Edituser">Edit user</button>
+    <button class="btn btn-primary" @onclick="Adduser">Add user</button>
+    <button class="btn btn-primary" @onclick="DeleteUser">Delete user</button>
 }
 
 @code {
@@ -60,46 +67,18 @@ else
         StateHasChanged();
     }
 
-    //private async Task AddUser()
-    //{
-    //    response = await Http.PostAsJsonAsync<Response>("Api/Users/GetUsers");
-
-
-    //    StateHasChanged();
-    //}
-
-
-
-    public class Response
+    void Edituser()
     {
-        public ErrorResult[] Errors { get; set; }
-        public User[] Data { get; set; }
+        NavigationManager.NavigateTo("Edituser");
     }
 
-    public class User
+    void Adduser()
     {
-        public int Id { get; set; }
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
-        public string FatherName { get; set; }
-        public string Login { get; set; }
-        public bool Deleted { get; set; }
+        NavigationManager.NavigateTo("Adduser");
     }
 
-    public class ErrorResult
+    void DeleteUser()
     {
-        public ErrorResult()
-        {
-
-        }
-
-        public ErrorResult(string key, string msg)
-        {
-            ErrorKey = key;
-            ErrorMessage = msg;
-        }
-
-        public string ErrorKey { get; set; }
-        public string ErrorMessage { get; set; }
+        NavigationManager.NavigateTo("DeleteUser");
     }
 }

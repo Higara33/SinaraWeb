@@ -30,18 +30,18 @@ namespace Sinara.Core.Types.Api.Extensions
             {
                 Errors = new ErrorResult[] {new ErrorResult(key, errorMessage)},
 
-                Data = new ResponseErrorModel
-                {
-                    Status = ResultStatuses.Error,
-                    ErrorType = ApiStatus.Errors.InvalidRequest,
-                    ErrorMessages = new[]
-                    {
-                        new ErrorMessageModel {
-                            Key = key,
-                            Errors = new []{ errorMessage }
-                        }
-                    }
-                }
+                //Data = new ResponseErrorModel
+                //{
+                //    Status = ResultStatuses.Error,
+                //    ErrorType = ApiStatus.Errors.InvalidRequest,
+                //    ErrorMessages = new[]
+                //    {
+                //        new ErrorMessageModel {
+                //            Key = key,
+                //            Errors = new []{ errorMessage }
+                //        }
+                //    }
+                //}
             };
         }
     }
