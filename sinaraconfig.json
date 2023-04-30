@@ -1,0 +1,6 @@
+﻿{
+"Services": {
+    "ApiService": "http://localhost:5181",
+    "UserService": "http://localhost:5211"
+  }
+}

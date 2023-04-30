@@ -7,8 +7,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Sinara.Core.Types\Sinara.Core.csproj" />
-    <ProjectReference Include="..\SinaraService.TransortTypes\Sinara.UserService.TransortTypes.csproj" />
+    <ProjectReference Include="..\Sinara.Core\Sinara.Core.csproj" />
+    <ProjectReference Include="..\Sinara.UserService.TransortTypes\Sinara.UserService.TransortTypes.csproj" />
   </ItemGroup>
 
 </Project>

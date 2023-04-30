@@ -1,11 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Sinara.Core.Types.Api.Extensions;
+﻿using Sinara.Core.Types.Api.Extensions;
 using Sinara.Core.Types.Api.ViewModels;
-using Sinara.UserService.TransortTypes.Models;
+using Sinara.UserService.DBConnect;
 using Sinara.UserService.TransortTypes.Api.Contracts;
-using SinaraWeb.DBConnect;
-using System.Collections.Generic;
 using Sinara.UserService.TransortTypes.Models.FormModels;
+using Sinara.UserService.TransortTypes.Models.ViewModels;
 
 namespace Sinara.UserService.Api
 {
@@ -99,7 +97,7 @@ namespace Sinara.UserService.Api
                         return new ApiResult().Error("operetion_with_deleted_users", $"User with Login={model.Login} once existed");
                 }
 
-                var user = new User
+                var user = new UserViewModel
                 {
                     FirstName = model.FirstName,
                     LastName = model.LastName,
@@ -137,7 +135,7 @@ namespace Sinara.UserService.Api
 
         #region Private
 
-        private List<User> GetNotDeletedUsers()
+        private List<UserViewModel> GetNotDeletedUsers()
         {
             using (var context = new ApiContext())
             {

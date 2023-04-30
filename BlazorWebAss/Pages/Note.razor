@@ -1,4 +1,5 @@
 ﻿@page "/note"
+@page "/"
 
 @using BlazorWebAss.Models
 
@@ -13,7 +14,7 @@
 
 @if (response == null)
 {
-    <p><em>There are no users in note</em></p>
+    <p><em>Loading...</em></p>
 }
 else
 {
@@ -57,8 +58,7 @@ else
 
     protected override async Task OnInitializedAsync()
     {
-        response = await Http.GetFromJsonAsync<Response>("Api/Users/GetUsers");
-        StateHasChanged();
+        UpdateTable();
     }
 
     private async Task UpdateTable()

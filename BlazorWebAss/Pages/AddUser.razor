@@ -7,33 +7,47 @@
 @inject IJSRuntime Js
 
 <h2>AddUser</h2>
-
+<EditForm Model="@user">
 <div class="row">
     <div class="col-md-6">
+        <DataAnnotationsValidator />
+        <ValidationSummary />
         <div class="form-group">
             <label for="FirstName"> First Name *</label>
             <input form="FirstName" class="form-control" @bind="@user.FirstName" />
+            <ValidationMessage For="@(() => @user.FirstName)" />
+
         </div>
     </div>
     <div class="col-md-6">
+            <DataAnnotationsValidator />
+            <ValidationSummary />
         <div class="form-group">
             <label for="LastName"> Last Name *</label>
             <input form="LastName" class="form-control" @bind="@user.LastName" />
+            <ValidationMessage For="@(() => @user.LastName)" />
         </div>
     </div>
     <div class="col-md-6">
+            <DataAnnotationsValidator />
+            <ValidationSummary />
         <div class="form-group">
             <label for="FatherName"> FatherName *</label>
             <input form="FatherName" class="form-control" @bind="@user.FatherName" />
+            <ValidationMessage For="@(() => @user.FatherName)" />
         </div>
     </div>
     <div class="col-md-6">
+            <DataAnnotationsValidator />
+            <ValidationSummary />
         <div class="form-group">
             <label for="Login"> Login *</label>
             <input form="Login" class="form-control" @bind="@user.Login" />
+            <ValidationMessage For="@(() => @user.Login)" />
         </div>
     </div>
 </div>
+</EditForm>
 <div class="row">
     <div class="col-md-4">
         <div class="form-group">

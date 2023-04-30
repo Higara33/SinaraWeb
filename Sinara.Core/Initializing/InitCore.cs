@@ -1,11 +1,7 @@
 ﻿using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Sinara.Core.Helpers;
 using Sinara.Core.Managers.Contracts;
-using System.ComponentModel;
-using System.Text.Json.Serialization;
 using ConfigurationManager = Sinara.Core.Managers.ConfigurationManager;
 
 namespace Sinara.Core.Initializing
@@ -20,8 +16,8 @@ namespace Sinara.Core.Initializing
         public static IConfiguration LoadConfiguration()
         {
             return new ConfigurationBuilder()
-                //.AddJsonFile(Path.Combine(EnvironmentHelper.PathToConfigs, "sinaraconfig.json"))
-                .AddJsonFile("D:\\sinaraconfig.json")
+                //.AddJsonFile("D:\\sinaraconfig.json")
+                .AddJsonFile(Path.Combine(Directory.GetParent(Directory.GetCurrentDirectory()).FullName, "sinaraconfig.json"))
                 .AddEnvironmentVariables()
                 .Build();
         }

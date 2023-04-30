@@ -7,13 +7,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Models\ViewModels\**" />
-    <EmbeddedResource Remove="Models\ViewModels\**" />
-    <None Remove="Models\ViewModels\**" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\Sinara.Core.Types\Sinara.Core.csproj" />
+    <ProjectReference Include="..\Sinara.Core\Sinara.Core.csproj" />
   </ItemGroup>
 
 </Project>

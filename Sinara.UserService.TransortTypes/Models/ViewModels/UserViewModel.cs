@@ -1,6 +1,6 @@
-﻿namespace Sinara.UserService.TransortTypes.Models
+﻿namespace Sinara.UserService.TransortTypes.Models.ViewModels
 {
-    public class User
+    public class UserViewModel
     {
         public int Id { get; set; }
         public string FirstName { get; set; }

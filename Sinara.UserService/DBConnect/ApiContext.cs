@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Sinara.UserService.TransortTypes.Models;
+using Sinara.UserService.TransortTypes.Models.ViewModels;
 
-namespace SinaraWeb.DBConnect
+namespace Sinara.UserService.DBConnect
 {
     public class ApiContext : DbContext
     {
@@ -10,6 +10,6 @@ namespace SinaraWeb.DBConnect
         {
             optionsBuilder.UseInMemoryDatabase(databaseName: "UsersDb");
         }
-        public DbSet<User> Users { get; set; }
+        public DbSet<UserViewModel> Users { get; set; }
     }
 }

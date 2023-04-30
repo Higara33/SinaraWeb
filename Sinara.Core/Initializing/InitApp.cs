@@ -33,10 +33,6 @@ namespace Sinara.Core.Initializing
             var host = WebHost.CreateDefaultBuilder(args)
                 .UseConfiguration(configuration)
                 .UseStartup<T>();
-                //.UseDefaultServiceProvider((context, options) =>
-                //{
-                //    options.ValidateOnBuild = true;
-                //});
 
             return host.Build();
         }
