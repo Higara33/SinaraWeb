@@ -3,7 +3,7 @@ using Sinara.UserService.TransortTypes.Models.ViewModels;
 
 namespace Sinara.UserService.DBConnect
 {
-    public class ApiContext : DbContext
+    public class DbProvider : DbContext
     {
         protected override void OnConfiguring
        (DbContextOptionsBuilder optionsBuilder)

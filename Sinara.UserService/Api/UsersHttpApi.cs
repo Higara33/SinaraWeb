@@ -11,22 +11,22 @@ namespace Sinara.UserService.Api
     {
         public async Task<ApiResult> GetUsers(bool deleted = false)
         {
-            using (var context = new ApiContext())
+            using (var context = new DbProvider())
             {
                 if (!deleted)
                 {
                     if (context.Users.ToList().Count == 0)
                         return new ApiResult().Error("no_users_in_note", $"There are no users in note");
 
-                    var notDeletedUsers = GetNotDeletedUsers();
+                    var notDeletedUsers = context.Users.ToList().Where(x => !x.Deleted).ToList();
 
                     if (notDeletedUsers.Count == 0)
-                        return new ApiResult().Error("operetion_with_deleted_users", $"There are no users in note");
+                        return new ApiResult().Error("operation_with_deleted_users", $"There are no users in note");
 
                     return new ApiResult().Ok(notDeletedUsers);
                 }
                 else
-                    return new ApiResult().Error("operetion_with_deleted_users", $"You do not have permission to view deleted users");
+                    return new ApiResult().Error("operation_with_deleted_users", $"You do not have permission to view deleted users");
             }
         }
 
@@ -38,32 +38,36 @@ namespace Sinara.UserService.Api
             if (model.FirstName == string.Empty && model.LastName == string.Empty && model.FatherName == string.Empty && model.NewLogin == string.Empty)
                 return new ApiResult().Error("no_data_to_edit", $"No data to edit!");
 
-            using (var context = new ApiContext())
+            using (var context = new DbProvider())
             {
-                var notDeletedUsers = GetNotDeletedUsers();
+                UserViewModel user1;
 
-                if (notDeletedUsers.Count == 0)
-                    return new ApiResult().Error("No_not_deleted_users", $"User with Login={model.Login} is not found");
+                var notDeletedUsers = context.Users.ToList().Where(x => !x.Deleted).ToList();
 
                 if (!notDeletedUsers.Any(x => x.Login == model.Login))
+                    return new ApiResult().Error("user_not_found", $"User with Login={model.Login} is not found");
+
+                var userInList = notDeletedUsers.SingleOrDefault(x => x.Login == model.Login);
+
+                if (userInList == null)
                     return new ApiResult().Error("user_not_found", $"User with Login={model.Login} is not found");
 
                 if (notDeletedUsers.Any(x => x.Login == model.NewLogin))
                     return new ApiResult().Error("the_same_login", $"User with Login={model.NewLogin} already exists");
 
-                var id = notDeletedUsers.Where(x => x.Login == model.Login).First().Id;
+                var user = context.Users.Find(userInList.Id);
 
                 if (model.FirstName != string.Empty)
-                    context.Users.Find(id).FirstName = model.FirstName;
+                    user.FirstName = model.FirstName;
 
                 if (model.LastName != string.Empty)
-                    context.Users.Find(id).LastName = model.LastName;
+                    user.LastName = model.LastName;
 
                 if (model.FatherName != string.Empty)
-                    context.Users.Find(id).FatherName = model.FatherName;
+                    user.FatherName = model.FatherName;
 
                 if (model.NewLogin != string.Empty)
-                    context.Users.Find(id).Login = model.NewLogin;
+                    user.Login = model.NewLogin;
 
                 context.SaveChanges();
             }
@@ -85,7 +89,7 @@ namespace Sinara.UserService.Api
             if (model.FirstName == string.Empty)
                 return new ApiResult().Error("firstName_is_Empty", $"FirstName is Empty");
 
-            using (var context = new ApiContext())
+            using (var context = new DbProvider())
             {
                 var userList = context.Users.ToList();
                 foreach(var item in userList) 
@@ -94,7 +98,7 @@ namespace Sinara.UserService.Api
                         return new ApiResult().Error("the_same_login_with_user", $"User with Login={model.Login} already exists");
 
                     if (item.Login == model.Login && item.Deleted)
-                        return new ApiResult().Error("operetion_with_deleted_users", $"User with Login={model.Login} once existed");
+                        return new ApiResult().Error("operation_with_deleted_users", $"User with Login={model.Login} once existed");
                 }
 
                 var user = new UserViewModel
@@ -114,14 +118,14 @@ namespace Sinara.UserService.Api
 
         public  async Task<ApiResult> DeleteUser(string login)
         {
-            using (var context = new ApiContext())
+            using (var context = new DbProvider())
             {
-                var notDeletedUsers = GetNotDeletedUsers();
+                var notDeletedUsers = context.Users.ToList().Where(x => !x.Deleted).ToList();
 
                 if (notDeletedUsers.Count == 0)
                     return new ApiResult().Error("No_not_deleted_users", $"User with Login={login} is not found");
 
-                var user = notDeletedUsers.Where(x => x.Login == login).FirstOrDefault();
+                var user = notDeletedUsers.Where(x => x.Login == login).SingleOrDefault();
                 if (user == null)
                     return new ApiResult().Error("user_not_found", $"User with Login={login} is not found");
 
@@ -133,31 +137,5 @@ namespace Sinara.UserService.Api
             return new ApiResult().Ok();
         }
 
-        #region Private
-
-        private List<UserViewModel> GetNotDeletedUsers()
-        {
-            using (var context = new ApiContext())
-            {
-                var allUsersList = context.Users.ToList();
-                var notDeletedUsersList = context.Users.ToList();
-
-                if (allUsersList.Count == 0)
-                    return allUsersList;
-
-                foreach (var user in allUsersList) 
-                {
-                    if (user.Deleted)
-                        notDeletedUsersList.Remove(user);
-                }
-
-                if (notDeletedUsersList.Count == 0)
-                    return notDeletedUsersList;
-
-                return notDeletedUsersList;
-            }
-        }
-
-        #endregion
     }
 }
