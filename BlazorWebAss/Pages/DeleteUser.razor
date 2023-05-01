@@ -9,33 +9,32 @@
 <h2>DeleteUser</h2>
 
 <div class="row">
+    <EditForm Model="@user" OnValidSubmit="@Save">
+        <DataAnnotationsValidator />
     <div class="col-md-6">
         <div class="form-group">
             <label for="Login"> Login *</label>
-            <input form="Login" class="form-control" @bind="@login" />
+            <input form="Login" class="form-control" @bind="@user.Login" />
+            <ValidationMessage For="@(() => @user.Login)" />
         </div>
     </div>
-</div>
-<div class="row">
-    <div class="col-md-4">
-        <div class="form-group">
-            <input type="button" class="btn btn-primary" @onclick="@Save" value="Save" />
-            <input type="button" class="btn" @onclick="@Cancel" value="Cancel" />
-        </div>
-    </div>
+        <input type="submit" class="btn btn-primary" value="Save" />
+        <input type="button" class="btn" @onclick="@Cancel" value="Cancel" />
+    </EditForm>
 </div>
 
 @code {
-    string login = string.Empty;
+
+    DeleteUserFormModel user = new();
     Response response = new();
 
     protected async Task Save()
     {
-        response = await Http.DeleteFromJsonAsync<Response>($"Api/Users/DeleteUser/{login}");
+        response = await Http.DeleteFromJsonAsync<Response>($"Api/Users/DeleteUser/{user.Login}");
         //response = await responseMessage.Content.ReadFromJsonAsync<Response>();
         if (response.Errors != null)
         {
-            Js.InvokeVoidAsync("alert", response.Errors.FirstOrDefault().ErrorMessage);
+            await Js.InvokeVoidAsync("alert", response.Errors.FirstOrDefault().ErrorMessage);
         }
         else
             NavigationManager.NavigateTo("note");

@@ -9,6 +9,8 @@
 <h2>EditUser</h2>
 
 <div class="row">
+    <EditForm Model="@user" OnValidSubmit="@Validate">
+        <DataAnnotationsValidator />
         <div class="col-md-6">
                 <div class="form-group">
                         <label for="FirstName"> First Name *</label>
@@ -31,6 +33,7 @@
                 <div class="form-group">
                     <label for="Login"> Login *</label>
                     <input form="Login" class="form-control" @bind="@user.Login" />
+                    <ValidationMessage For="@(() => @user.Login)" />
                 </div>
         </div>
         <div class="col-md-6">
@@ -39,19 +42,22 @@
                     <input form="NewLogin" class="form-control" @bind="@user.NewLogin" />
                 </div>
         </div>
-</div>
-<div class="row">
-        <div class="col-md-4">
-                <div class="form-group">
-                        <input type="button" class="btn btn-primary" @onclick="@Save" value="Save" />
-                        <input type="button" class="btn" @onclick="@Cancel" value="Cancel" />
-                    </div>
-            </div>
+        <input type="submit" class="btn btn-primary" value="Save" />
+        <input type="button" class="btn" @onclick="@Cancel" value="Cancel" />
+    </EditForm>
 </div>
 
 @code {
     EditUserFormModel user = new();
     Response response = new();
+
+    private async Task Validate()
+    {
+        if (user.FatherName == string.Empty && user.LastName == string.Empty && user.FirstName == string.Empty && user.NewLogin == string.Empty)
+            await Js.InvokeVoidAsync("alert", "No data to edit");
+        else
+            await Save();
+    }
 
     protected async Task Save()
     {
@@ -59,7 +65,7 @@
         response = await responseMessage.Content.ReadFromJsonAsync<Response>();
         if (response.Errors != null)
         {
-            Js.InvokeVoidAsync("alert", response.Errors.FirstOrDefault().ErrorMessage);
+            await Js.InvokeVoidAsync("alert", response.Errors.FirstOrDefault().ErrorMessage);
         }
         else
             NavigationManager.NavigateTo("note");
